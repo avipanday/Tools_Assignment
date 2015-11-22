@@ -1,0 +1,92 @@
+<!--
+HTML inclass Demo
+ -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Contact Us</title>
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>      
+		<![endif]-->
+		<link rel="stylesheet" type="text/css" href="css/site.css">
+
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<meta name="Viewport" content="width=device-width" />
+	</head>
+	<body>
+	<div class="container">
+		<header>
+			<div class="align-center">
+				<img src="img/logo.jpg" />
+			</div>
+
+			<nav>
+				<ul>
+					<li class="btn">
+						<a href="index.html">Submit Request</a>
+					</li>
+					<li class="btn">
+						<a href="showresults.html">View My Requests</a>
+					</li>
+				</ul>
+			</nav>
+			<div>Please use the form below to submit your request for a tool.</div>			
+		</header>
+
+		<section id="main">
+			<div class="align-center">
+				<h1>Submit Tool Request</h1>
+			</div>
+
+			<div class="align-center-2">
+				<form name="usrform" class="contact-form bordered-element" id="usrform" method="POST">
+					<div>
+						<label for="sso">SSO:</label>
+						<input type="text" name="sso" id="useStars" /> 
+						<br/>
+					</div>
+					<div>
+						<label  for="requestDate">Request Date:</label>
+						<input type="date" name="requestDate" id="searchPhrase" />
+						<br/>
+					</div>
+					<div>
+						<label for="customer">Customer:</label>
+						<input type="text" name="customer" id="useStars" /> 
+						<br/>
+					</div>
+					<div id="userNumberDiv">
+						<label for="priority">Priority:</label> 
+						<select name="priority" id="langChoice">
+							<option selected>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+						</select>
+						<br/>
+					</div>
+					<div>
+						<label for="tool">Requested Tool:</label>
+						<input type="text" name="tool" id="tool" /> 
+						<br/>
+					</div>
+					<div id="submitButton">
+						<input type="submit" value="Submit" />
+					</div>
+				</form>
+			</div>
+			
+
+		</section> 
+		<footer>
+			&copy; Team Awesome! 
+		</footer>   
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+	<script type="text/javascript" src="js/contact.js"></script>
+
+	</body>
+</html>

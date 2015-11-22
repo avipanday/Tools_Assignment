@@ -1,0 +1,57 @@
+<!--
+HTML inclass Demo
+ -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Search Page</title>
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>      
+		<![endif]-->
+		<link rel="stylesheet" type="text/css" href="css/site.css">
+
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<meta name="Viewport" content="width=device-width" />
+
+		</head>
+		<body>
+			<div class="container">
+				<header>
+					<div class="align-center">
+						<img src="img/logo.jpg" />
+					</div>
+
+					<nav>
+						<ul>
+							<li class="btn">
+								<a href="index.html">Submit Request</a>
+							</li>
+							<li class="btn">
+								<a href="showresults.html">View My Requests</a>
+							</li>
+						</ul>
+					</nav>
+					
+
+				</header>
+				<section id="main">
+					<form class="simple-form bordered-element" name="searchForm" id="searchForm" method="POST">
+						<label for="sso">Enter your SSO:</label>
+						<input type="text" name="sso" id="useStars" /> 
+						<br/>
+						<input type="submit" value="search" />
+					</form>
+					<div id="results" class="bordered-element">
+						Show requests here based on SSO entered.
+					</div>
+					
+					</section> 
+					<footer>
+							&copy; Team Awesome! 
+					</footer>   
+				
+				<script src="js/jquery-1.11.3.js" type="text/javascript"></Script>
+			<Script type="text/javascript" src="js/site.js"></Script>
+	</body>
+</html>
