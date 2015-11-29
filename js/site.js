@@ -39,6 +39,7 @@ $(document).ready(function() {
 	//attach listener to submit button
 	console.log("Attaching submit button listener.");
 	$('#submit').click(function (){ 
+		console.log("Adding new request.")
 		requests.push(myRequestFactory.createRequest({
 			requestor: $('#requestRequestor').val(),
 			date: $('#requestDate').val(),
@@ -52,7 +53,7 @@ $(document).ready(function() {
 	//attach listener to the request searcher
 	console.log("Attaching search button listener.");
 	$('#search').click(function () {
-		console.log(getUserRequests($('#searchSso').val()));
+		console.log("Searching for requests.");
 		buildUserRequestList(getUserRequests($('#searchSso').val()));
 	});
 });
