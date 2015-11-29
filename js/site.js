@@ -1,141 +1,137 @@
-/* 
-  site.js
-*/
+var tools = [];
+var requests = [];
+var requestId = 0;
 
 $(document).ready(function() {
-
 	"use strict";
+	console.log(getRandomInt(5,10));
 
-	//var resultDiv = document.getElementById("results");
-	//resultDiv.innerHTML = "<p>Hello world in JavaScript!</p>";
-	
-	var resultList = $("#resultList");	
-	resultList.text("This is from JQuery");
-	
-	var toggleButton = $("#toggleBtn");
+	var myToolFactory = new ToolFactory();
+	var myRequestFactory = new RequestFactory();
 
-	toggleButton.on("click",function(){
-		resultList.toggle(500);
-
-		if(toggleButton.text() == "Hide")
-		{
-			toggleButton.text("Show") ;
-		}
-		else
-			toggleButton.text("Hide");
-	
+	//attach listeners to header links
+	$('#showSubmitRequest').click(function() {
+		$('#submitRequest').show();
+		$('#listRequests').hide();
 	});
 
-	var apiCall = $("#searchForm");
-
-	apiCall.on("submit", function(e) {
-		
-		var searchPhrase = $("#searchPhrase").val();
-		var langChoice = $("#langChoice").val();
-
-		var gitHubSearch = "https://api.github.com/search/repositories?q=" + searchPhrase + "_language:" + langChoice + "&sort=starts";
-		
-		//IE broswer will require to make the cross domain value to true 
-		jQuery.support.cors = true;
-		
-		$.get(gitHubSearch)
-		.success(function(r) {
-	      console.log(r.items.length);
-		  displayResults(r.items);
-		  lengthCheck(r.items.length);
-	    })
-		.fail(function(err) {
-	      alert("Your call to the API failed!");
-	    })
-		.done(function() {
-	      console.log("API Call completed");
-	    });
-
-	    e.preventDefault();
-
-		function lengthCheck(x) {
-			if (x <= 0) {
-				alert("Your search returned no results!");
-			}
-		}
-	    
-		function displayResults(results) {
-		    resultList.empty();
-		    $.each(results, function(i, item) {
-
-		      var newResult = $("<div class='result'>" +
-		        "<div class='title'>" + item.name + "</div>" +
-		        "<div>Language: " + item.language + "</div>" +
-		        "<div>Owner: " + item.owner.login + "</div>" +
-		        "</div>");
-
-		      newResult.hover(function() {
-		        // make it darker
-		        $(this).css("background-color", "lightgray");
-		      }, function() {
-		        // reverse
-		        $(this).css("background-color", "transparent");
-		      });
-
-		      resultList.append(newResult);
-	  		})
-	  	}
-
+	$('#showRequestList').click(function() {
+		$('#submitRequest').hide();
+		$('#listRequests').show(); 
 	});
 
+	//generate random inventory of tools
+	console.log("Generating random inventory of tools.");
+	var numberOfTools = getRandomInt(5,20);
+	for (var i = 0; i < numberOfTools + 1; i++) {
+		var newTool = myToolFactory.createTool({
+			name: "Generic tool " + i,
+			value: "$" + getRandomInt(2,25000),
+			serialNumber: getRandomSerialNumber(),
+			});
+		tools.push(newTool);
+	}
 
-	/* Manipulate DOM*/
+	//populate the select dropdown
+	console.log("Populating tool select dropdown.");
+	populateToolDropdown(tools);
 
-/*	resultList.empty();
-	
-	var results = [{
-		name: "jQuery",
-		language: "JavaScript",
-		score: 4.5,
-		owner : {
-			login: "Ge",
-			id: 123456}
-		},{
-		name: "jQuery UI",
-		language: "JavaScript",
-		score: 5,
-		owner : {
-			login: "Ramesh",
-		id: 123456}
-		},{
-		name: "jQuery Mobile",
-		language: "JavaScript",
-		score: 5.5,
-		owner : {
-			login: "Ramesh",
-		id: 123456}
-		}];
-	
-	$.each(results, function(i, item){
-		var newResult = $("<div class='result'>" +
-       	"<div class='title'>" + item.name + "</div>" +
-       	"<div>Language: " + item.language + "</div>" +
-       	"<div>Owner: " + item.owner.login + "</div>" +
-       	"</div>");
-		
-		newResult.hover(function() {
-        // make it darker
-		$(this).css("background-color", "lightgray");
-       }, function() {
-		// reverse
-		$(this).css("background-color", "transparent");
-		});
-
-		resultList.append(newResult);
-		
+	//attach listener to submit button
+	console.log("Attaching submit button listener.");
+	$('#submit').click(function (){ 
+		requests.push(myRequestFactory.createRequest({
+			requestor: $('#requestRequestor').val(),
+			date: $('#requestDate').val(),
+			location: $('#requestLocation').val(),
+			priority: $('#requestPriority').val(),
+			customer: $('#requestCustomer').val(),
+			tool: tools.filter(function(option){return option.serialNumber == $('#tool-list :selected').val();})[0]
+		}));
 	});
-	*/
-	
-	/*Network API Calls */
 
+	//attach listener to the request searcher
+	console.log("Attaching search button listener.");
+	$('#search').click(function () {
+		console.log(getUserRequests($('#searchSso').val()));
+		buildUserRequestList(getUserRequests($('#searchSso').val()));
+	});
 });
 
+//TOOLS
+  ///////
+function Tool(options) {
+	this.value = options.value || '$100';
+	this.name = options.name || 'Generic tool';
+	this.serialNumber = options.serialNumber || '001';
+}
 
+function ToolFactory(){
+	ToolFactory.prototype.createTool = function createNewTool(options) {
+		return new Tool(options);
+	}
+}
 
+function getRandomSerialNumber() {
+	return "" + getRandomInt(0,9) + getRandomInt(0,9) + getRandomInt(0,9);
+}
 
+function getRandomToolFromTools() {
+	return tools[getRandomInt(0,tools.length)];
+}
 
+function populateToolDropdown(tools) {
+	var dropdown = $('#tool-list');
+	for (var i = 0; i < tools.length; i++) {
+		var newOption = document.createElement("option");
+		newOption.textContent = tools[i].name + " (" + tools[i].serialNumber + ")";
+		newOption.value = tools[i].serialNumber;
+		dropdown.append(newOption);
+	}
+}
+
+//REQUESTS
+  ////////
+function Request(options) {
+	this.requestor = options.requestor || '000000000';
+	this.date = options.date || new Date().toJSON().slice(0,10);
+	this.location = options.location || "Dallas, TX";
+	this.priority = options.priority || "Low";
+	this.customer = options.customer || "GE Internal Customer";
+	this.tool = options.tool || getRandomToolFromTools();
+	this.id = requestId++;
+	this.status = options.status || "Processing";
+}
+
+function RequestFactory() {
+	RequestFactory.prototype.createRequest = function createNewRequest(options) {
+		return new Request(options);
+	}
+}
+
+function getUserRequests(sso) {
+	console.log("Searching for requests from " + sso);
+	return requests.filter(function(option){return option.requestor == sso;});
+}
+
+function buildUserRequestList(userRequests) {
+	var resultList = $('#results');
+	resultList.html('<h3>Requests for ' + userRequests[0].requestor);
+	for (var i = 0; i < userRequests.length; i++) {
+		resultList.append('<div class="bordered-element"><b>Request: </b>' + userRequests[i].id + "</br>"
+			+ '<b>Status: </b>' + userRequests[i].status + '</br>'
+			+ '<b>Date: </b>' + userRequests[i].date + "</br>"
+			+ '<b>Location: </b>' + userRequests[i].location + "</br>"
+			+ '<b>Priority: </b>' + userRequests[i].priority + "</br>"
+			+ '<b>Customer: </b>' + userRequests[i].customer + "</br>"
+			+ '<b>Tool: </b> <div class="toolResult"><b>Name: </b>' + userRequests[i].tool.name + '</br>'
+			+ '<b>Serial Number: </b>' + userRequests[i].tool.serialNumber + '</br>'
+			+ '<b>Value: </b>' + userRequests[i].tool.value + '</br></div>'
+			+ '');
+	}
+}
+
+//UTILITY
+  ///////
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}

@@ -9,6 +9,7 @@ HTML inclass Demo
 		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>      
 		<![endif]-->
 		<link rel="stylesheet" type="text/css" href="css/site.css">
+		<link rel="stylesheet" type="text/css" href="css/tools.css">
 
 		<meta name="HandheldFriendly" content="true" />
 		<meta name="MobileOptimized" content="320" />
@@ -24,69 +25,91 @@ HTML inclass Demo
 			<nav>
 				<ul>
 					<li class="btn">
-						<a href="index.html">Submit Request</a>
+						<a href="#" id="showSubmitRequest">Submit Request</a>
 					</li>
 					<li class="btn">
-						<a href="showresults.html">View My Requests</a>
+						<a href="#" id="showRequestList">View My Requests</a>
 					</li>
 				</ul>
 			</nav>
 			<div>Please use the form below to submit your request for a tool.</div>			
 		</header>
 
-		<section id="main">
+		<section id="submitRequest">
 			<div class="align-center">
 				<h1>Submit Tool Request</h1>
 			</div>
-
 			<div class="align-center-2">
-				<form name="usrform" class="contact-form bordered-element" id="usrform" method="POST">
+				<div name="usrform" class="contact-form bordered-element" id="usrform">
 					<div>
 						<label for="sso">SSO:</label>
-						<input type="text" name="sso" id="useStars" /> 
+						<input type="text" name="sso" id="requestRequestor" /> 
 						<br/>
 					</div>
 					<div>
 						<label  for="requestDate">Request Date:</label>
-						<input type="date" name="requestDate" id="searchPhrase" />
+						<input type="date" name="requestDate" id="requestDate" />
+						<br/>
+					</div>
+					<div>
+						<label  for="location">Request Location:</label>
+						<input type="text" name="location" id="requestLocation" />
 						<br/>
 					</div>
 					<div>
 						<label for="customer">Customer:</label>
-						<input type="text" name="customer" id="useStars" /> 
+						<input type="text" name="customer" id="requestCustomer" /> 
 						<br/>
 					</div>
-					<div id="userNumberDiv">
+					<div>
 						<label for="priority">Priority:</label> 
-						<select name="priority" id="langChoice">
-							<option selected>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
+						<select name="priority" id="requestPriority">
+							<option>High</option>
+							<option>Medium</option>
+							<option selected>Low</option>
 						</select>
 						<br/>
 					</div>
 					<div>
 						<label for="tool">Requested Tool:</label>
-						<input type="text" name="tool" id="tool" /> 
+						<select name="tool-list" id="tool-list">
+						<!-- populate list of tools from js -->
+						</select>
 						<br/>
 					</div>
 					<div id="submitButton">
-						<input type="submit" value="Submit" />
+						<input type="submit" id="submit" value="Submit" />
 					</div>
-				</form>
+				</div>
 			</div>
-			
+		</section>
 
-		</section> 
+		<section id="listRequests">
+			<div class="align-center">
+				<h1>View Tool Requests</h1>
+			</div>
+			<div class=align-center-2>
+				<div class="simple-form bordered-element" name="searchForm" id="requestsList" style="width:30%">
+					<label for="searchSso">Enter your SSO:</label>
+					<input type="text" name="searchSso" id="searchSso" /> 
+					<br/>
+					<input type="submit" value="Search" id="search" />
+				</div>
+				<div id="results" class="bordered-element" style="width:66%">
+					Show requests here based on SSO entered.
+				</div>
+			</div>
+		</section>  
+
+		<div class="spacer"></div>
+
 		<footer>
 			&copy; Team Awesome! 
 		</footer>   
 	</div>
 
 	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
-	<script type="text/javascript" src="js/contact.js"></script>
+	<script type="text/javascript" src="js/site.js"></script>
 
 	</body>
 </html>

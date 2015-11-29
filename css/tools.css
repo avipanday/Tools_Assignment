@@ -1,0 +1,11 @@
+.toolResult {
+	margin-left: 20px;
+}
+
+.spacer {
+	margin-top: 20px;
+}
+
+#listRequests {
+	display: none;
+}
