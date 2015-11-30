@@ -56,6 +56,21 @@ $(document).ready(function() {
 		console.log("Searching for requests.");
 		buildUserRequestList(getUserRequests($('#searchSso').val()));
 	});
+
+	//attach quick view buttons
+	console.log("Attaching quick view button listeners.");
+	$('#showProcessing').click(function () {
+		console.log("Alerting processing requests.");
+		showStatusAlertBox("Processing", $('#searchSso').val());
+	});
+	$('#showInTransit').click(function () {
+		console.log("Alerting processing requests.");
+		showStatusAlertBox("In Transit", $('#searchSso').val());
+	});
+	$('#showDelivered').click(function () {
+		console.log("Alerting processing requests.");
+		showStatusAlertBox("Delivered", $('#searchSso').val());
+	});
 });
 
 //TOOLS
@@ -131,6 +146,16 @@ function buildUserRequestList(userRequests) {
 	}
 }
 
+function showStatusAlertBox(status, sso) {
+	var requestResultList = requests.filter(function(option){return option.requestor == sso && option.status == status;});
+	var alertText = "";
+	for (var i = 0; i < requestResultList.length; i++) {
+		var append = "Request : " + requestResultList[i].id + " - " + requestResultList[i].status.toUpperCase() + "\n";
+		alertText += append;
+	}
+	//alert(alertText);
+	alert(alertText);
+}
 //UTILITY
   ///////
 function getRandomInt(min, max) {
