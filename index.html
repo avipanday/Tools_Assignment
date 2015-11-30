@@ -25,10 +25,10 @@ HTML inclass Demo
 			<nav>
 				<ul>
 					<li class="btn">
-						<a href="#" id="showSubmitRequest">Submit Request</a>
+						<a href="#" id="showSubmitRequest"><input type="submit" value="Submit Request"></input></a>
 					</li>
 					<li class="btn">
-						<a href="#" id="showRequestList">View My Requests</a>
+						<a href="#" id="showRequestList"><input type="submit" value="View My Requests"></input></a>
 					</li>
 				</ul>
 			</nav>
@@ -42,7 +42,7 @@ HTML inclass Demo
 				<div name="usrform" class="contact-form bordered-element" id="usrform">
 					<div>
 						<label for="sso">SSO:</label>
-						<input type="text" name="sso" id="requestRequestor" /> 
+						<input type="tel" name="sso" id="requestRequestor" /> 
 						<br/>
 					</div>
 					<div>
@@ -87,24 +87,26 @@ HTML inclass Demo
 			<div class="align-center">
 				<h1>View Tool Requests</h1>
 			</div>
-			<div class=align-center-2>
-				<div class="simple-form bordered-element" name="searchForm" id="requestsList" style="width:30%">
-					<label for="searchSso">Enter your SSO:</label>
-					<input type="text" name="searchSso" id="searchSso" /> 
+			<div class="align-center-2" style="display:inline-block">
+				<div class="simple-form bordered-element" name="searchForm" id="requestsList">
+					<label for="searchSso">SSO:</label>
+					<input type="tel" name="searchSso" id="searchSso" /> 
 					<br/>
 					<input type="submit" value="Search" id="search" />
 				</div>
-				<div id="results" class="bordered-element" style="width:66%">
+				<div id="results" class="results bordered-element">
 					Show requests here based on SSO entered.
 				</div>
 			</div>
 		</section>  
+		<div class="push"></div>
 
 		<div class="spacer"></div>
-
-		<footer>
-			&copy; Team Awesome! 
-		</footer>   
+		<div class="footer">
+			<footer>
+				&copy; Team Awesome! 
+			</footer>   
+		</div>
 	</div>
 
 	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
